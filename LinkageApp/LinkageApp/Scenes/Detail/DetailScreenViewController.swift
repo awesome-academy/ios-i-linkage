@@ -9,7 +9,7 @@
 import Kingfisher
 import Toaster
 
-final class DetailScreenViewController: UIViewController {
+final class DetailScreenViewController: BaseViewController {
     
     // MARK: - Outlets
     @IBOutlet private weak var avatarImageView: UIImageView!
@@ -42,7 +42,7 @@ final class DetailScreenViewController: UIViewController {
                 : Title.descriptionTT + "\(model.description)"
             hobbiesLabel.text = model.hobbies.isEmpty ? ""
                 : Title.hobbiesTT + "\(model.hobbies)"
-            genderImageView.image = model.gender ? UIImage(named: "male") :
+            genderImageView.image = model.isMale ? UIImage(named: "male") :
                 UIImage(named: "female")
             let url = URL(string: model.urlImage)
             avatarImageView.kf.setImage(with: url)

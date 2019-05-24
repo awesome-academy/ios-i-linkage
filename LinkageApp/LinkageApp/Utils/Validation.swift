@@ -30,9 +30,9 @@ enum Validation {
     static func modelValidateWithFilter(model: ModelCellResult, filter: Filter) -> Bool {
         switch filter.gender {
         case 1:
-            if !model.user.gender { return false }
+            if !model.user.isMale { return false }
         case 2:
-            if model.user.gender { return false }
+            if model.user.isMale { return false }
         default:
             break
         }
@@ -44,6 +44,10 @@ enum Validation {
             !Validation.checkValidateNumberInRange(number: Int(model.location.distance),
                                                    min: fromDistance,
                                                    max: toDistance) {
+            return false
+        }
+        if !filter.enable100km,
+            model.location.distance > 100.0.tom {
             return false
         }
         return true
@@ -82,6 +86,9 @@ enum Validation {
             if !Validation.isValidateDate(date: dob) {
                 vc.showErrorAlert(errMessage: Message.dobFieldNotValid)
                 return false
+            }
+            if let age = dob.getAgeFromDateString(), age < 14 {
+                vc.showErrorAlert(errMessage: Message.limitedAge)
             }
         }
         return true
